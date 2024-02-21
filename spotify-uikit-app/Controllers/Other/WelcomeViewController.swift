@@ -8,24 +8,44 @@
 import UIKit
 
 class WelcomeViewController: UIViewController {
-
+    
+    private let signInButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle("Sign In with Spotify", for: .normal) 
+        button.setTitleColor(.blue, for: .normal)
+        button.layer.cornerRadius = 25
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGreen
         title = "Spotify"
-
-        // Do any additional setup after loading the view.
+        view.addSubview(signInButton)
+        signInButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        signInButton.frame = CGRect(x: 20, y: view.height-50-view.safeAreaInsets.bottom, width: view.width-40, height: 50)
     }
-    */
+    
+    @objc func didTapSignIn() {
+        let authViewController = AuthViewController()
+        authViewController.completionHandler = { [weak self] success in
+            self?.handleSignIn(success: success)
+        }
+        authViewController.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(authViewController, animated: true)
+    }
+    
+    private func handleSignIn(success: Bool) {
+        
+    }
+}
 
+
+#Preview("Welcome View Controller"){
+    WelcomeViewController()
 }
