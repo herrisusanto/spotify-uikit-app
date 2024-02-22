@@ -13,8 +13,21 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         title = "Home"
         view.backgroundColor = .systemBackground
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(didTapSettings))
+    }
+    
+    @objc func didTapSettings() {
+        let settingsViewController = SettingsViewController()
+        settingsViewController.title = "Settings"
+        settingsViewController.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(settingsViewController, animated: true)
     }
 
 
+}
+
+#Preview("Home View Controller"){
+    HomeViewController()
 }
 

@@ -8,8 +8,12 @@
 import Foundation
 
 final class AuthManager {
+    
     static let shared = AuthManager()
     private init() {}
+    
+    private var refreshingToken: Bool = false
+    private var onRefreshBlocks = [((String) -> Void)]()
     
     public var signInUrl: URL? {
         let urlString = "\(Constants.baseUrl)?response_type=code&client_id=\(Constants.clientID)&scope=\(Constants.scopes)&redirect_uri=\(Constants.redirectUri)&show_dialog=TRUE"
@@ -95,6 +99,9 @@ final class AuthManager {
     }
     
     public func refreshIfNeeded(completion: @escaping(Bool) -> Void) {
+        guard !refreshingToken else {
+            return
+        }
         guard shouldRefreshToken else {
             completion(true)
             return
@@ -106,6 +113,9 @@ final class AuthManager {
         guard let url = URL(string: Constants.tokenApiUrl) else {
             return
         }
+        
+        refreshingToken = true
+        
         var components = URLComponents()
         components.queryItems  = [
             URLQueryItem(name: "grant_type", value: "refresh_token"),
@@ -128,6 +138,7 @@ final class AuthManager {
         
         let task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
             guard let self = self else { return }
+            self.refreshingToken = false
             
             guard let data = data, error == nil else {
                 completion(false)
@@ -138,6 +149,8 @@ final class AuthManager {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let result = try decoder.decode(AuthResponse.self, from: data)
+                self.onRefreshBlocks.forEach{ $0(result.accessToken)}
+                self.onRefreshBlocks.removeAll()
                 self.cacheToken(result: result)
                 completion(true)
             } catch {
@@ -157,5 +170,24 @@ final class AuthManager {
         PersistenceManager.save(Date().addingTimeInterval(TimeInterval(result.expiresIn)), forKey: .expirationToken)
          
         
+    }
+    // MARK:  Supplies valid token to be used with Network Manager
+    public func withValidToken(completion: @escaping (String) -> Void) {
+        guard !refreshingToken else {
+            // MARK:  Append the completion
+            onRefreshBlocks.append(completion)
+            return
+        }
+        if shouldRefreshToken {
+            // MARK:  Refresh token
+            refreshIfNeeded { [weak self] success in
+                guard let self = self else { return }
+                if let token = self.accessToken, success {
+                    completion(token)
+                }
+            }
+        } else if let token = accessToken {
+            completion(token)
+        }
     }
 }

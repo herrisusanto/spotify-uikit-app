@@ -12,7 +12,16 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        NetworkManager.shared.getCurrentProfile { result in
+            switch result {
+            case .success(let success):
+                print(success)
+                break
+            case .failure(let failure):
+                print(failure.localizedDescription)
+                break
+            }
+        }
     }
     
 
