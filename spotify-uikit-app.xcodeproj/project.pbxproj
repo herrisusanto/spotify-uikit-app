@@ -31,6 +31,9 @@
 		0F91C83F2B85F07700AB2942 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F91C83E2B85F07700AB2942 /* LibraryViewController.swift */; };
 		0F91C8422B85FBDF00AB2942 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F91C8412B85FBDF00AB2942 /* UIView+Ext.swift */; };
 		0F91C8442B85FBF000AB2942 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F91C8432B85FBEF00AB2942 /* UIViewController+Ext.swift */; };
+		0FCE6B222B87406700D0BB05 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE6B212B87406700D0BB05 /* AuthResponse.swift */; };
+		0FCE6B242B8742B900D0BB05 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE6B232B8742B900D0BB05 /* PersistenceManager.swift */; };
+		0FCE6B272B874F6300D0BB05 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE6B262B874F6300D0BB05 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +63,9 @@
 		0F91C83E2B85F07700AB2942 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		0F91C8412B85FBDF00AB2942 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		0F91C8432B85FBEF00AB2942 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
+		0FCE6B212B87406700D0BB05 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
+		0FCE6B232B8742B900D0BB05 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		0FCE6B262B874F6300D0BB05 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +98,7 @@
 		0F91C8012B85DF7800AB2942 /* spotify-uikit-app */ = {
 			isa = PBXGroup;
 			children = (
+				0FCE6B252B874F5300D0BB05 /* Utilities */,
 				0F91C8402B85FBCB00AB2942 /* Extensions */,
 				0F91C81B2B85E09B00AB2942 /* Resources */,
 				0F91C81A2B85E06200AB2942 /* Controllers */,
@@ -110,6 +117,7 @@
 				0F91C8302B85EF6F00AB2942 /* AuthManager.swift */,
 				0F91C8322B85EF7E00AB2942 /* NetworkManager.swift */,
 				0F91C8342B85EF8900AB2942 /* HapticsManager.swift */,
+				0FCE6B232B8742B900D0BB05 /* PersistenceManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -121,6 +129,7 @@
 				0F91C8382B85EFA500AB2942 /* AudioTrack.swift */,
 				0F91C83A2B85EFAE00AB2942 /* Artist.swift */,
 				0F91C83C2B85EFBB00AB2942 /* UserProfile.swift */,
+				0FCE6B212B87406700D0BB05 /* AuthResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -193,6 +202,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		0FCE6B252B874F5300D0BB05 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				0FCE6B262B874F6300D0BB05 /* Constants.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -263,9 +280,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FCE6B272B874F6300D0BB05 /* Constants.swift in Sources */,
 				0F91C81F2B85EE8E00AB2942 /* SearchViewController.swift in Sources */,
 				0F91C81D2B85EE4D00AB2942 /* TabBarViewController.swift in Sources */,
 				0F91C8072B85DF7800AB2942 /* HomeViewController.swift in Sources */,
+				0FCE6B242B8742B900D0BB05 /* PersistenceManager.swift in Sources */,
 				0F91C8352B85EF8900AB2942 /* HapticsManager.swift in Sources */,
 				0F91C8312B85EF6F00AB2942 /* AuthManager.swift in Sources */,
 				0F91C8032B85DF7800AB2942 /* AppDelegate.swift in Sources */,
@@ -284,6 +303,7 @@
 				0F91C8332B85EF7E00AB2942 /* NetworkManager.swift in Sources */,
 				0F91C82D2B85EF3100AB2942 /* PlayerViewController.swift in Sources */,
 				0F91C82F2B85EF4A00AB2942 /* SearchResultViewController.swift in Sources */,
+				0FCE6B222B87406700D0BB05 /* AuthResponse.swift in Sources */,
 				0F91C8272B85EEF600AB2942 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
