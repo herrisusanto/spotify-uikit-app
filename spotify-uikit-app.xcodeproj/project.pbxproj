@@ -37,6 +37,9 @@
 		0FCE6B292B87ACCE00D0BB05 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE6B282B87ACCE00D0BB05 /* Settings.swift */; };
 		0FCE6B2C2B88DD2500D0BB05 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0FCE6B2B2B88DD2500D0BB05 /* SDWebImage */; };
 		0FCE6B542B8EC07700D0BB05 /* SButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE6B532B8EC07700D0BB05 /* SButton.swift */; };
+		0FCE6B572B8EE8C100D0BB05 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE6B562B8EE8C100D0BB05 /* SignUpViewController.swift */; };
+		0FCE6B592B8EE8D100D0BB05 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE6B582B8EE8D100D0BB05 /* SignInViewController.swift */; };
+		0FCE6B5B2B8EECB000D0BB05 /* STextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE6B5A2B8EECB000D0BB05 /* STextfield.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +74,9 @@
 		0FCE6B262B874F6300D0BB05 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0FCE6B282B87ACCE00D0BB05 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		0FCE6B532B8EC07700D0BB05 /* SButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SButton.swift; sourceTree = "<group>"; };
+		0FCE6B562B8EE8C100D0BB05 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		0FCE6B582B8EE8D100D0BB05 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		0FCE6B5A2B8EECB000D0BB05 /* STextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STextfield.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +166,7 @@
 		0F91C81A2B85E06200AB2942 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0FCE6B552B8EE8A100D0BB05 /* Auth */,
 				0F91C8212B85EEC000AB2942 /* Other */,
 				0F91C8202B85EEBA00AB2942 /* Core */,
 			);
@@ -222,8 +229,18 @@
 			isa = PBXGroup;
 			children = (
 				0FCE6B532B8EC07700D0BB05 /* SButton.swift */,
+				0FCE6B5A2B8EECB000D0BB05 /* STextfield.swift */,
 			);
 			path = "Custom Views";
+			sourceTree = "<group>";
+		};
+		0FCE6B552B8EE8A100D0BB05 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				0FCE6B562B8EE8C100D0BB05 /* SignUpViewController.swift */,
+				0FCE6B582B8EE8D100D0BB05 /* SignInViewController.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,8 +329,10 @@
 				0F91C8312B85EF6F00AB2942 /* AuthManager.swift in Sources */,
 				0FCE6B542B8EC07700D0BB05 /* SButton.swift in Sources */,
 				0F91C8032B85DF7800AB2942 /* AppDelegate.swift in Sources */,
+				0FCE6B592B8EE8D100D0BB05 /* SignInViewController.swift in Sources */,
 				0F91C83F2B85F07700AB2942 /* LibraryViewController.swift in Sources */,
 				0F91C8232B85EEDD00AB2942 /* AuthViewController.swift in Sources */,
+				0FCE6B5B2B8EECB000D0BB05 /* STextfield.swift in Sources */,
 				0F91C8392B85EFA500AB2942 /* AudioTrack.swift in Sources */,
 				0F91C8052B85DF7800AB2942 /* SceneDelegate.swift in Sources */,
 				0F91C82B2B85EF2400AB2942 /* PlaylistViewController.swift in Sources */,
@@ -324,6 +343,7 @@
 				0F91C83B2B85EFAE00AB2942 /* Artist.swift in Sources */,
 				0F91C8372B85EF9900AB2942 /* Playlist.swift in Sources */,
 				0F91C83D2B85EFBB00AB2942 /* UserProfile.swift in Sources */,
+				0FCE6B572B8EE8C100D0BB05 /* SignUpViewController.swift in Sources */,
 				0F91C8332B85EF7E00AB2942 /* NetworkManager.swift in Sources */,
 				0F91C82D2B85EF3100AB2942 /* PlayerViewController.swift in Sources */,
 				0F91C82F2B85EF4A00AB2942 /* SearchResultViewController.swift in Sources */,
