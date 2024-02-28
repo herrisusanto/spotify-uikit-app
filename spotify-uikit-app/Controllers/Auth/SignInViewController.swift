@@ -83,7 +83,7 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Sign In"
+        title = "Sign In" 
         view.backgroundColor = Colors.primaryBlack
         view.addSubview(emailOrUsernameLabel)
         view.addSubview(emailOrUsername)
@@ -93,7 +93,7 @@ class SignInViewController: UIViewController {
         view.addSubview(logInWithoutPassword)
         
         NSLayoutConstraint.activate([
-            emailOrUsernameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            emailOrUsernameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             emailOrUsernameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             emailOrUsernameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             

@@ -13,8 +13,17 @@ class WelcomeViewController: UIViewController {
         let signUpButton = SButton(color: Colors.primaryGreen!, title: "Sign up free", image: nil)
         signUpButton.configuration?.baseForegroundColor = Colors.primaryBlack
         
+        
         return signUpButton
     }()
+    
+    @objc func didTapSignUp() {
+        let signUpViewController = SignUpViewController()
+        signUpViewController.navigationItem.largeTitleDisplayMode = .never 
+        navigationController?.pushViewController(signUpViewController, animated: true)
+        
+    }
+    
     
     private let spotifyButton: SButton = {
         let spotifyButton = SButton(color: Colors.primaryGreen!, title: "Continue with Spotify", image: nil)
@@ -22,6 +31,7 @@ class WelcomeViewController: UIViewController {
         
         return spotifyButton
     }()
+    
     
     private let googleButton: SButton = {
        let googleButton = SButton()
@@ -37,12 +47,29 @@ class WelcomeViewController: UIViewController {
         facebookButton.configuration?.baseForegroundColor = Colors.primaryBlack
         return facebookButton
     }()
+    
+    private let signInButton: UIButton = {
+        let button = UIButton(configuration: UIButton.Configuration.plain())
+        button.setTitle("Log in", for: .normal)
+        button.tintColor = .white
+        button.isHighlighted = true
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    @objc func didTapSignIn() {
+        let signInViewController = SignInViewController()
+        signInViewController.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(signInViewController, animated: true)
+    }
      
     
     private let spotifyLogo: UIImageView = {
         let imageLogo = Images.spotifyIconWhite
         imageLogo.contentMode = .scaleAspectFit
         imageLogo.translatesAutoresizingMaskIntoConstraints = false
+        
         return imageLogo
     }()
     
@@ -51,7 +78,6 @@ class WelcomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Spotify"
         
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
@@ -70,7 +96,11 @@ class WelcomeViewController: UIViewController {
         view.addSubview(facebookButton)
         view.addSubview(googleButton)
         view.addSubview(spotifyButton)
-        spotifyButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
+        view.addSubview(signInButton)
+        
+        spotifyButton.addTarget(self, action: #selector(didTapSpotify), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(didTapSignUp), for: .touchUpInside)
+        signInButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             spotifyLogo.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
@@ -93,10 +123,17 @@ class WelcomeViewController: UIViewController {
             googleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             googleButton.heightAnchor.constraint(equalToConstant: 60),
             
-            spotifyButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            spotifyButton.bottomAnchor.constraint(equalTo: signInButton.topAnchor, constant: -5),
             spotifyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             spotifyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            spotifyButton.heightAnchor.constraint(equalToConstant: 60)
+            spotifyButton.heightAnchor.constraint(equalToConstant: 60),
+            
+            signInButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            signInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            signInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            signInButton.heightAnchor.constraint(equalToConstant: 60),
+            
+            
             
         ])
     }
@@ -105,7 +142,7 @@ class WelcomeViewController: UIViewController {
         super.viewDidLayoutSubviews()
     }
     
-    @objc func didTapSignIn() {
+    @objc func didTapSpotify() {
         let authViewController = AuthViewController()
         authViewController.completionHandler = { [weak self] success in
             self?.handleSignIn(success: success)
