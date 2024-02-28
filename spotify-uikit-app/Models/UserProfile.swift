@@ -8,18 +8,34 @@
 import Foundation
 
 struct UserProfile: Codable {
-    let country: String
-    let displayName: String
-    let email: String
-    let explicitContent: [String: Int]
-    let externalUrls: [String: String]
-//    let followers: [String: Codable?]
-    let id: String
-    let product: String
-    let images: [UserImage]
+    let country, display_name, email: String
+    let explicit_content: ExplicitContent
+    let external_urls: ExternalUrls
+    let followers: Followers
+    let href, id: String
+    let images: [Image]
+    let product, type, uri: String
 }
 
-struct UserImage: Codable {
+// MARK: - ExplicitContent
+struct ExplicitContent: Codable {
+    let filter_enabled, filter_locked: Bool
+}
+
+// MARK: - ExternalUrls
+struct ExternalUrls: Codable {
+    let spotify: String
+}
+
+// MARK: - Followers
+struct Followers: Codable {
+    let href: String
+    let total: Int
+}
+
+// MARK: - Image
+struct Image: Codable {
     let url: String
+    let height, width: Int
 }
 

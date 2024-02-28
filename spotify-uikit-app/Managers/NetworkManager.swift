@@ -25,12 +25,14 @@ final class NetworkManager {
                 }
                 do {
                     let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+//                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+//                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                    print("Data: \(result)")
                     let profile = try decoder.decode(UserProfile.self, from: data)
                     print("GET Profile: \(profile)")
-                    
+                    completion(.success(profile))
                 } catch {
-                    completion(.failure(error))
+//                    completion(.failure(error))
                 }
                 
             }
@@ -41,8 +43,7 @@ final class NetworkManager {
     enum HTTPMethod: String {
         case GET
         case POST
-    }
-    
+    } 
     private func createRequest(with url: URL?, type: HTTPMethod, completion: @escaping (URLRequest) -> Void) {
         AuthManager.shared.withValidToken { token in
             guard let apiUrl = url else {

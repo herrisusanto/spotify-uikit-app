@@ -35,6 +35,8 @@
 		0FCE6B242B8742B900D0BB05 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE6B232B8742B900D0BB05 /* PersistenceManager.swift */; };
 		0FCE6B272B874F6300D0BB05 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE6B262B874F6300D0BB05 /* Constants.swift */; };
 		0FCE6B292B87ACCE00D0BB05 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE6B282B87ACCE00D0BB05 /* Settings.swift */; };
+		0FCE6B2C2B88DD2500D0BB05 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0FCE6B2B2B88DD2500D0BB05 /* SDWebImage */; };
+		0FCE6B542B8EC07700D0BB05 /* SButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE6B532B8EC07700D0BB05 /* SButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +70,7 @@
 		0FCE6B232B8742B900D0BB05 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		0FCE6B262B874F6300D0BB05 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0FCE6B282B87ACCE00D0BB05 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		0FCE6B532B8EC07700D0BB05 /* SButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FCE6B2C2B88DD2500D0BB05 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +104,7 @@
 		0F91C8012B85DF7800AB2942 /* spotify-uikit-app */ = {
 			isa = PBXGroup;
 			children = (
+				0FCE6B522B8EC01A00D0BB05 /* Custom Views */,
 				0FCE6B252B874F5300D0BB05 /* Utilities */,
 				0F91C8402B85FBCB00AB2942 /* Extensions */,
 				0F91C81B2B85E09B00AB2942 /* Resources */,
@@ -213,6 +218,14 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		0FCE6B522B8EC01A00D0BB05 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				0FCE6B532B8EC07700D0BB05 /* SButton.swift */,
+			);
+			path = "Custom Views";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -229,6 +242,9 @@
 			dependencies = (
 			);
 			name = "spotify-uikit-app";
+			packageProductDependencies = (
+				0FCE6B2B2B88DD2500D0BB05 /* SDWebImage */,
+			);
 			productName = "spotify-uikit-app";
 			productReference = 0F91C7FF2B85DF7800AB2942 /* spotify-uikit-app.app */;
 			productType = "com.apple.product-type.application";
@@ -257,6 +273,9 @@
 				Base,
 			);
 			mainGroup = 0F91C7F62B85DF7800AB2942;
+			packageReferences = (
+				0FCE6B2A2B88DD2500D0BB05 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			productRefGroup = 0F91C8002B85DF7800AB2942 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -291,6 +310,7 @@
 				0FCE6B242B8742B900D0BB05 /* PersistenceManager.swift in Sources */,
 				0F91C8352B85EF8900AB2942 /* HapticsManager.swift in Sources */,
 				0F91C8312B85EF6F00AB2942 /* AuthManager.swift in Sources */,
+				0FCE6B542B8EC07700D0BB05 /* SButton.swift in Sources */,
 				0F91C8032B85DF7800AB2942 /* AppDelegate.swift in Sources */,
 				0F91C83F2B85F07700AB2942 /* LibraryViewController.swift in Sources */,
 				0F91C8232B85EEDD00AB2942 /* AuthViewController.swift in Sources */,
@@ -521,6 +541,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0FCE6B2A2B88DD2500D0BB05 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.18.11;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0FCE6B2B2B88DD2500D0BB05 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0FCE6B2A2B88DD2500D0BB05 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0F91C7F72B85DF7800AB2942 /* Project object */;
 }
