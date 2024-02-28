@@ -9,6 +9,16 @@ import UIKit
 
 class SignInViewController: UIViewController {
     
+    private let emailOrUsernameLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Email or username"
+        label.textColor = Colors.primaryWhite
+        label.font = UIFont.boldSystemFont(ofSize: 36)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
     private let emailOrUsername: UITextField = {
         let textfield = UITextField()
         textfield.placeholder = "Enter email or username."
@@ -20,6 +30,16 @@ class SignInViewController: UIViewController {
         textfield.backgroundColor = .tertiarySystemBackground
         textfield.textColor = .black
         return textfield
+    }()
+    
+    private let passwordLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Password"
+        label.textColor = Colors.primaryWhite
+        label.font = UIFont.boldSystemFont(ofSize: 36)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
     }()
     
     private let password: UITextField = {
@@ -65,22 +85,32 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         title = "Sign In"
         view.backgroundColor = Colors.primaryBlack
+        view.addSubview(emailOrUsernameLabel)
         view.addSubview(emailOrUsername)
+        view.addSubview(passwordLabel)
         view.addSubview(password)
         view.addSubview(signInButton)
         view.addSubview(logInWithoutPassword)
         
         NSLayoutConstraint.activate([
-            emailOrUsername.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
+            emailOrUsernameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            emailOrUsernameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            emailOrUsernameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            emailOrUsername.topAnchor.constraint(equalTo: emailOrUsernameLabel.bottomAnchor, constant: 20),
             emailOrUsername.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emailOrUsername.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             emailOrUsername.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             emailOrUsername.heightAnchor.constraint(equalToConstant: 50),
             
-            password.topAnchor.constraint(equalTo: emailOrUsername.bottomAnchor, constant: 10),
-            password.heightAnchor.constraint(equalToConstant: 50),
+            passwordLabel.topAnchor.constraint(equalTo: emailOrUsername.bottomAnchor, constant: 20),
+            passwordLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            passwordLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            password.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 10),
             password.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             password.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            password.heightAnchor.constraint(equalToConstant: 50),
             
             signInButton.topAnchor.constraint(equalTo: password.bottomAnchor, constant: 50),
             signInButton.heightAnchor.constraint(equalToConstant: 50),
