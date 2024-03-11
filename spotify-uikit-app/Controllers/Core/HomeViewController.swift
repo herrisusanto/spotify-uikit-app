@@ -30,8 +30,13 @@ class HomeViewController: UIViewController {
                             seeds.insert(random)
                         }
                     }
-                    NetworkManager.shared.getRecommendations(genres: seeds) { _ in
-
+                    NetworkManager.shared.getRecommendations(genres: seeds) { response in
+                        switch response {
+                            case .success(let model):
+                                print(model.tracks)
+                            case .failure(let error):
+                                break
+                        }
                     }
 
                 case .failure(let failure):

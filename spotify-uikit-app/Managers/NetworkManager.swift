@@ -103,10 +103,10 @@ final class NetworkManager {
         }
     }
 
-    public func getRecommendations(genres: Set<String>,completion: @escaping ((Result<String, Error>)) -> Void) {
+    public func getRecommendations(genres: Set<String>,completion: @escaping ((Result<RecommendationsResponse, Error>)) -> Void) {
         let seeds = genres.joined(separator: ",")
-        createRequest(with: URL(string: Constants.baseApiUrl + "/recommendations?seed_genres=\(seeds)"), type: .GET) { request in
-            print(request)
+        createRequest(with: URL(string: Constants.baseApiUrl + "/recommendations?limit=2&seed_genres=\(seeds)"), type: .GET) { request in 
+            print("Request recommendations: \(request)")
             let task = URLSession.shared.dataTask(with: request) { data, _ , error in
                 guard let data = data, error == nil else {
                     completion(.failure(APIError.failedToGetData))
@@ -115,10 +115,12 @@ final class NetworkManager {
                 do {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let json = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-                    print("JSON response is here: \(json)")
-                    completion(.success("Succeeded"))
+                    print(try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed))
+                    let result = try decoder.decode(RecommendationsResponse.self, from: data)
+                    print(result)
+                    completion(.success(result))
                 } catch {
+                    print(error.localizedDescription)
                     completion(.failure(error))
                 }
             }
@@ -126,7 +128,7 @@ final class NetworkManager {
         }
     }
 
-    public func getRecommendedGenres(completion: @escaping ((Result<Genre, Error>)) -> Void) {
+    public func getRecommendedGenres(completion: @escaping ((Result<RecommendedGenresResponse, Error>)) -> Void) {
         createRequest(with: URL(string: Constants.baseApiUrl + "/recommendations/available-genre-seeds"), type: .GET) { request in
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data , error == nil else {
@@ -137,7 +139,7 @@ final class NetworkManager {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                    
-                    let result = try decoder.decode(Genre.self, from: data)
+                    let result = try decoder.decode(RecommendedGenresResponse.self, from: data)
                     completion(.success(result))
                 } catch {
                     completion(.failure(error))
