@@ -82,8 +82,8 @@ class SignInViewController: UIViewController {
     
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "Sign In" 
+        super.viewDidLoad() 
+        title = nil
         view.backgroundColor = Colors.primaryBlack
         view.addSubview(emailOrUsernameLabel)
         view.addSubview(emailOrUsername)

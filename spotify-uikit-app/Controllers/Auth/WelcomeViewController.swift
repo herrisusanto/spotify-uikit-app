@@ -20,6 +20,7 @@ class WelcomeViewController: UIViewController {
     @objc func didTapSignUp() {
         let signUpViewController = SignUpViewController()
         signUpViewController.navigationItem.largeTitleDisplayMode = .never 
+        navigationItem.backButtonTitle = nil
         navigationController?.pushViewController(signUpViewController, animated: true)
         
     }
@@ -60,7 +61,8 @@ class WelcomeViewController: UIViewController {
     
     @objc func didTapSignIn() {
         let signInViewController = SignInViewController()
-        signInViewController.navigationItem.largeTitleDisplayMode = .never
+        signInViewController.navigationItem.largeTitleDisplayMode = .never 
+        navigationItem.backButtonTitle = nil
         navigationController?.pushViewController(signInViewController, animated: true)
     }
      

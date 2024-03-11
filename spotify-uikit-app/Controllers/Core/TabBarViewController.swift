@@ -31,6 +31,7 @@ class TabBarViewController: UITabBarController {
         let homeNavigationController = UINavigationController(rootViewController: homeViewController)
         homeNavigationController.navigationBar.prefersLargeTitles = true
         homeNavigationController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 1)
+        homeNavigationController.navigationBar.tintColor = .label
         return homeNavigationController
     }
     
@@ -41,6 +42,7 @@ class TabBarViewController: UITabBarController {
         let searchNavigationController = UINavigationController(rootViewController: searchViewController)
         searchNavigationController.navigationBar.prefersLargeTitles = true
         searchNavigationController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 2)
+        searchNavigationController.navigationBar.tintColor = .label
         return searchNavigationController
     }
     
@@ -51,6 +53,7 @@ class TabBarViewController: UITabBarController {
         let libraryNavigationController = UINavigationController(rootViewController: libraryViewController)
         libraryNavigationController.navigationBar.prefersLargeTitles = true
         libraryNavigationController.tabBarItem = UITabBarItem(title: "Library", image: UIImage(systemName: "books.vertical"), tag: 3)
+        libraryNavigationController.navigationBar.tintColor = .label
         return libraryNavigationController
     }
 }

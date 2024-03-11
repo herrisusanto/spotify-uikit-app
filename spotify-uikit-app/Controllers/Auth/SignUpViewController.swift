@@ -50,9 +50,10 @@ class SignUpViewController: UIViewController {
     }()
 
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad() 
         view.backgroundColor = Colors.primaryBlack
         title = "Create account"
+        
         
         view.addSubview(label)
         view.addSubview(email)
