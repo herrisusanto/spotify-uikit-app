@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F549D962BA1A781002EE117 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F549D952BA1A781002EE117 /* AlbumViewController.swift */; };
+		0F549D982BA1AF01002EE117 /* AlbumDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F549D972BA1AF01002EE117 /* AlbumDetailsResponse.swift */; };
+		0F549D9A2BA1EF05002EE117 /* PlaylistDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F549D992BA1EF05002EE117 /* PlaylistDetailsResponse.swift */; };
 		0F6266F72B9F0ED800255FE9 /* NewReleasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6266F62B9F0ED800255FE9 /* NewReleasesResponse.swift */; };
 		0F6266F92B9F0F9400255FE9 /* APIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6266F82B9F0F9400255FE9 /* APIImage.swift */; };
 		0F6266FB2B9F130F00255FE9 /* FeaturedPlaylistsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6266FA2B9F130F00255FE9 /* FeaturedPlaylistsResponse.swift */; };
@@ -54,6 +57,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F549D952BA1A781002EE117 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
+		0F549D972BA1AF01002EE117 /* AlbumDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsResponse.swift; sourceTree = "<group>"; };
+		0F549D992BA1EF05002EE117 /* PlaylistDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailsResponse.swift; sourceTree = "<group>"; };
 		0F6266F62B9F0ED800255FE9 /* NewReleasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleasesResponse.swift; sourceTree = "<group>"; };
 		0F6266F82B9F0F9400255FE9 /* APIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIImage.swift; sourceTree = "<group>"; };
 		0F6266FA2B9F130F00255FE9 /* FeaturedPlaylistsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedPlaylistsResponse.swift; sourceTree = "<group>"; };
@@ -181,6 +187,8 @@
 				0F6266FA2B9F130F00255FE9 /* FeaturedPlaylistsResponse.swift */,
 				0F6266FC2B9F2C9F00255FE9 /* RecommendedGenresResponse.swift */,
 				0F6266FE2B9F48B800255FE9 /* RecommendationsResponse.swift */,
+				0F549D972BA1AF01002EE117 /* AlbumDetailsResponse.swift */,
+				0F549D992BA1EF05002EE117 /* PlaylistDetailsResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -244,6 +252,7 @@
 				0F91C82A2B85EF2400AB2942 /* PlaylistViewController.swift */,
 				0F91C82C2B85EF3100AB2942 /* PlayerViewController.swift */,
 				0F91C82E2B85EF4A00AB2942 /* SearchResultViewController.swift */,
+				0F549D952BA1A781002EE117 /* AlbumViewController.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -366,7 +375,9 @@
 				0F91C81D2B85EE4D00AB2942 /* TabBarViewController.swift in Sources */,
 				0F62670A2BA1140A00255FE9 /* FeaturedPlaylistCellViewModel.swift in Sources */,
 				0F6266FF2B9F48B800255FE9 /* RecommendationsResponse.swift in Sources */,
+				0F549D962BA1A781002EE117 /* AlbumViewController.swift in Sources */,
 				0F62670C2BA1144F00255FE9 /* RecommendedTrackCellViewModel.swift in Sources */,
+				0F549D982BA1AF01002EE117 /* AlbumDetailsResponse.swift in Sources */,
 				0F91C8072B85DF7800AB2942 /* HomeViewController.swift in Sources */,
 				0F6266F72B9F0ED800255FE9 /* NewReleasesResponse.swift in Sources */,
 				0F6267022BA09DAA00255FE9 /* NewReleaseCollectionViewCell.swift in Sources */,
@@ -397,6 +408,7 @@
 				0FCE6B572B8EE8C100D0BB05 /* SignUpViewController.swift in Sources */,
 				0F91C8332B85EF7E00AB2942 /* NetworkManager.swift in Sources */,
 				0F91C82D2B85EF3100AB2942 /* PlayerViewController.swift in Sources */,
+				0F549D9A2BA1EF05002EE117 /* PlaylistDetailsResponse.swift in Sources */,
 				0F6267062BA09E1C00255FE9 /* RecommendedTrackCollectionViewCell.swift in Sources */,
 				0F91C82F2B85EF4A00AB2942 /* SearchResultViewController.swift in Sources */,
 				0FCE6B222B87406700D0BB05 /* AuthResponse.swift in Sources */,

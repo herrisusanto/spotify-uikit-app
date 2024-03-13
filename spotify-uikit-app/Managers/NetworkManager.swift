@@ -15,7 +15,52 @@ final class NetworkManager {
     enum APIError: Error {
         case failedToGetData
     }
-
+    // MARK:  - Albums
+    public func getAlbumDetails(for album: Album, completion: @escaping(Result<AlbumDetailsResponse, Error>) -> Void) {
+        let url = URL(string: Constants.baseApiUrl + "/albums/" + album.id)
+        createRequest(with: url, type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _ , error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let result = try decoder.decode(AlbumDetailsResponse.self, from: data)
+                    completion(.success(result))
+                } catch {
+                    print(error.localizedDescription)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    // MARK:  - Playlists
+    public func getPlaylistDetails(for playlist: Playlist, completion: @escaping(Result<PlaylistDetailsResponse, Error>) -> Void) {
+        let url = URL(string: Constants.baseApiUrl + "/playlists/" + playlist.id)
+        createRequest(with: url, type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _ , error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let result = try decoder.decode(PlaylistDetailsResponse.self, from: data)
+                    print("Playlist details: \(result)")
+                    completion(.success(result))
+                } catch {
+                    print(error.localizedDescription)
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    // MARK:  - Profile
     public func getCurrentProfile(completion: @escaping(Result<UserProfile, Error>) ->Void) {
         createRequest(with: URL(string: "\(Constants.baseApiUrl)/me"), type: .GET) { baseRequest in
             let task = URLSession.shared.dataTask(with: baseRequest) { data, _, error in
@@ -29,7 +74,6 @@ final class NetworkManager {
                     //                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                     //                    print("Data: \(result)")
                     let profile = try decoder.decode(UserProfile.self, from: data)
-                    print("GET Profile: \(profile)")
                     completion(.success(profile))
                 } catch {
                     //                    completion(.failure(error))
@@ -58,7 +102,7 @@ final class NetworkManager {
             completion(request)
         }
     }
-
+    // MARK:  Browse
     public func getNewReleases(completion: @escaping ((Result<NewReleasesResponse, Error>)) -> Void) {
         createRequest(with: URL(string: Constants.baseApiUrl + "/browse/new-releases?limit=50"), type: .GET) { request in
             let task = URLSession.shared.dataTask(with: request) { data, _ , error in
@@ -95,7 +139,6 @@ final class NetworkManager {
                     let result = try decoder.decode(FeaturedPlaylistsResponse.self, from: data)
                     completion(.success(result))
                 } catch {
-                    print("Error is here: \(error.localizedDescription)")
                     completion(.failure(error))
                 }
             }
@@ -114,12 +157,9 @@ final class NetworkManager {
                 do {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    print(try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed))
                     let result = try decoder.decode(RecommendationsResponse.self, from: data)
-                    print(result)
                     completion(.success(result))
                 } catch {
-                    print(error.localizedDescription)
                     completion(.failure(error))
                 }
             }

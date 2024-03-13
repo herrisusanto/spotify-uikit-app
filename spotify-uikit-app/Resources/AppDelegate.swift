@@ -24,14 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         window.makeKeyAndVisible()
         self.window = window
-        
-        
-        // MARK:  Change navigation item style
-        let navigationBarAppearance = UINavigationBar.appearance()
-        navigationBarAppearance.tintColor =  .white
-        navigationBarAppearance.barTintColor = .white
-        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
-        
+
         return true
     }
 
