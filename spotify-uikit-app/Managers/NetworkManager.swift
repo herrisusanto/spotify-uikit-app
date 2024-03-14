@@ -50,10 +50,8 @@ final class NetworkManager {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let result = try decoder.decode(PlaylistDetailsResponse.self, from: data)
-                    print("Playlist details: \(result)")
                     completion(.success(result))
                 } catch {
-                    print(error.localizedDescription)
                     completion(.failure(error))
                 }
             }
