@@ -82,6 +82,50 @@ final class NetworkManager {
         }
     }
 
+    // MARK:  Category
+    public func getCategories(completion: @escaping (Result<[Category], Error>) -> Void) {
+        let url = URL(string: Constants.baseApiUrl + "/browse/categories?limit=50")
+        createRequest(with: url, type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let result = try decoder.decode(CategoriesResponse.self, from: data)
+                    completion(.success(result.categories.items))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+
+    public func getCategoryPlaylist(with category: Category,completion: @escaping (Result<[Playlist], Error>) -> Void) {
+        let url = URL(string: Constants.baseApiUrl + "/browse/categories/\(category.id)/playlists?limit=50")
+        createRequest(with: url, type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let result = try decoder.decode(CategoryPlaylistsResponse.self, from: data)
+                    let playlists = result.playlists.items
+                    completion(.success(playlists))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+
     enum HTTPMethod: String {
         case GET
         case POST
