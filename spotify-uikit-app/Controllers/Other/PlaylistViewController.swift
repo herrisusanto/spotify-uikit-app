@@ -124,8 +124,6 @@ extension PlaylistViewController: UICollectionViewDelegate, UICollectionViewData
         collectionView.deselectItem(at: indexPath, animated: true)
         //        Play song
     }
-
-
 }
 
 extension PlaylistViewController: PlaylistHeaderCollectionReusableViewDelegate {

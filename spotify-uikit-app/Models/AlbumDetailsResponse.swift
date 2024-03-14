@@ -16,7 +16,7 @@ struct AlbumDetailsResponse: Codable {
     let images: [APIImage]
     let label: String
     let name: String
-//    let tracks: TracksResponse
+    let tracks: TracksResponse
 }
 
 struct TracksResponse: Codable {
