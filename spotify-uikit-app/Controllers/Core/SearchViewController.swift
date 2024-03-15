@@ -7,7 +7,9 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UISearchResultsUpdating {
+class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
+
+    
 
     private var categories = [Category]()
 
@@ -40,6 +42,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
 
         view.addSubview(collectionView)
@@ -67,13 +70,29 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         collectionView.frame = view.bounds
     }
 
-    func updateSearchResults(for searchController: UISearchController) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let resultsController = searchController.searchResultsController as? SearchResultViewController,let query = searchController.searchBar.text, !query.trimmingCharacters(in: .whitespaces).isEmpty else {
             return
         }
-        print(query)
+
+        resultsController.delegate = self
+
+        NetworkManager.shared.search(with: query) { [weak self] result in
+            guard let _ = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                    case .success(let results):
+                        resultsController.update(with: results)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                }
+            }
+        }
     }
 
+    func updateSearchResults(for searchController: UISearchController) {
+
+    }
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -101,5 +120,24 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         let categoryVC = CategoryViewController(category: category)
         categoryVC.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(categoryVC, animated: true)
+    } 
+}
+
+extension SearchViewController: SearchResultViewControllerDelegate {
+    func didTapResult(_ result: SearchResult) {
+        switch result {
+            case .album(let model):
+                let albumVC = AlbumViewController(album: model)
+                albumVC.navigationItem.largeTitleDisplayMode = .never
+                navigationController?.pushViewController(albumVC, animated: true)
+            case .playlist(let model):
+                let playlistVC = PlaylistViewController(playlist: model)
+                playlistVC.navigationItem.largeTitleDisplayMode = .never
+                navigationController?.pushViewController(playlistVC, animated: true)
+            case .track(let model):
+                break
+            case .artist(let model):
+                break
+        }
     }
 }
