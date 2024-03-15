@@ -6,10 +6,9 @@
 //
 
 import UIKit
+import SafariServices
 
 class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
-
-    
 
     private var categories = [Category]()
 
@@ -134,10 +133,14 @@ extension SearchViewController: SearchResultViewControllerDelegate {
                 let playlistVC = PlaylistViewController(playlist: model)
                 playlistVC.navigationItem.largeTitleDisplayMode = .never
                 navigationController?.pushViewController(playlistVC, animated: true)
-            case .track(let model):
+            case .track(_):
                 break
             case .artist(let model):
-                break
+                guard let url = URL(string: model.externalUrls["spotify"] ?? "") else {
+                    return
+                }
+                let safariVC =  SFSafariViewController(url: url)
+                present(safariVC, animated: true)
         }
     }
 }
