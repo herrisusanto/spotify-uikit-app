@@ -7,10 +7,23 @@ An interactive Spotify clone built with UIKit to explore the framework's functio
 ## Architecture
 MVVM (Model View ViewModel) 
 
+## Views and controls
+-  UILabel
+-  UITextField
+-  UIImage
+-  UIImageView
+-  UICollectionView
+-  UIActivityIndicatorView
+-  UITableView
+-  UITableViewCell
+-  UIButton  
+
 ## Features
 - Authentication
-- Show New released albums, Featured playlists and Recommended albums 
+- Display New released albums, Featured playlists and Recommended albums
+- Display detail album, playlist and artist
 - Search songs, artists and albums 
 
 ## Package Dependencies
--  SDWebImage 
+-  SDWebImage
+-  SafariServices
