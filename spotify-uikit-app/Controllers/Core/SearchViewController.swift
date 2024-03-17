@@ -133,8 +133,8 @@ extension SearchViewController: SearchResultViewControllerDelegate {
                 let playlistVC = PlaylistViewController(playlist: model)
                 playlistVC.navigationItem.largeTitleDisplayMode = .never
                 navigationController?.pushViewController(playlistVC, animated: true)
-            case .track(_):
-                break
+            case .track(let track):
+                PlaybackPresenter.startPlayback(from: self, track: track)
             case .artist(let model):
                 guard let url = URL(string: model.externalUrls["spotify"] ?? "") else {
                     return
