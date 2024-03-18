@@ -58,6 +58,34 @@ final class NetworkManager {
             task.resume()
         }
     }
+
+    public func getCurrentUserPlaylists(completion: @escaping(Result<[Playlist], Error>) -> Void){
+        let url = URL(string: Constants.baseApiUrl + "/me/playlists?limit=50")
+        createRequest(with: url, type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let result = try decoder.decode(LibraryPlaylistsResponse.self, from: data)
+                    completion(.success(result.items))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+
+    public func createPlaylist(with name: String, completion: @escaping(Bool) -> Void){}
+
+    public func addTrackToPlaylist(track: AudioTrack,playlist: Playlist ,completion: @escaping(Bool) -> Void){}
+
+    public func removeTrackFromPlaylist(track: AudioTrack,playlist: Playlist ,completion: @escaping(Bool) -> Void){}
+
     // MARK:  - Profile
     public func getCurrentProfile(completion: @escaping(Result<UserProfile, Error>) ->Void) {
         createRequest(with: URL(string: "\(Constants.baseApiUrl)/me"), type: .GET) { baseRequest in

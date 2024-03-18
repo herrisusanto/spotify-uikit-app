@@ -9,23 +9,57 @@ import UIKit
 
 class LibraryPlaylistsViewController: UIViewController {
 
+    var playlists = [Playlist]()
+
+    private let noPlaylistsView = ActionLabelView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemGreen
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .systemBackground
+        setupNoPlaylistsView()
+        fetchPlaylist()
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        noPlaylistsView.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+        noPlaylistsView.center = view.center
     }
-    */
 
+    private func fetchPlaylist() {
+        NetworkManager.shared.getCurrentUserPlaylists { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                    case .success(let playlists):
+                        self.playlists = playlists
+                        self.updateUI()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                }
+            }
+        }
+    }
+
+    private func setupNoPlaylistsView() {
+        view.addSubview(noPlaylistsView)
+        noPlaylistsView.delegate = self
+        noPlaylistsView.configure(with: ActionLabelViewViewModel(text: "You don't have any playlists yet.", actionTitle: "Create"))
+    }
+
+    private func updateUI() {
+        if playlists.isEmpty {
+            // MARK:  Show label
+            noPlaylistsView.isHidden = false
+        } else {
+            // MARK:  Show table
+        }
+    }
+}
+
+
+extension LibraryPlaylistsViewController: ActionLabelViewDelegate {
+    func actionLabelViewDidTapButton(_ actionView: ActionLabelView) {
+        // MARK:  Show ui creation of playlist
+    }
 }
