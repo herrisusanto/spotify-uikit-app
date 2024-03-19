@@ -1,4 +1,5 @@
 # Spotify UIKit App
+![Preview](https://github.com/herrisusanto/spotify-uikit-app/blob/main/spotify-uikit-app/Resources/preview.gif)
 
 ## Description
 
@@ -16,14 +17,18 @@ MVVM (Model View ViewModel)
 -  UIActivityIndicatorView
 -  UITableView
 -  UITableViewCell
--  UIButton  
+-  UIButton
+-  etc...
 
 ## Features
-- Authentication
+- Authentication with Spotify
 - Display New released albums, Featured playlists and Recommended albums
 - Display detail album, playlist and artist
-- Search songs, artists and albums 
+- Search songs, artists and albums
+- Create playlist, add song to playlist
+- Add album to library
 
 ## Package Dependencies
 -  SDWebImage
 -  SafariServices
+-  AVFoundation
