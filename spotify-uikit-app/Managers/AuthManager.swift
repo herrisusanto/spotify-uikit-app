@@ -190,4 +190,13 @@ final class AuthManager {
             completion(token)
         }
     }
+
+    public func signOut(completion: (Bool) -> Void ) {
+        PersistenceManager.save(nil, forKey: .accessToken)
+        PersistenceManager.save(nil, forKey: .refreshToken)
+        PersistenceManager.save(nil, forKey: .expirationToken)
+        completion(true)
+    }
+
+
 }

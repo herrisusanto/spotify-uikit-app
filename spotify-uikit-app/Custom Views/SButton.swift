@@ -40,9 +40,9 @@ class SButton: UIButton {
     
     private func configure() {
         configuration = .bordered()
-        configuration?.cornerStyle = .capsule
-        translatesAutoresizingMaskIntoConstraints = false 
-        
+        configuration?.cornerStyle = .capsule 
+        translatesAutoresizingMaskIntoConstraints = false
+
     }
     
 }

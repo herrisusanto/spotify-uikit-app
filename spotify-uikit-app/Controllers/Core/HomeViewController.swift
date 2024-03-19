@@ -78,6 +78,7 @@ class HomeViewController: UIViewController {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        HapticsManager.shared.vibrateForSelection()
         let section = sections[indexPath.section]
         switch section {
             case .featuredPlaylists:

@@ -54,7 +54,7 @@ class LibraryAlbumsViewController: UIViewController {
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 switch result {
-                    case .success(let albums): 
+                    case .success(let albums):
                         self.albums = albums
                         self.updateUI()
                     case .failure(let error):
@@ -140,6 +140,7 @@ extension LibraryAlbumsViewController: UITableViewDelegate, UITableViewDataSourc
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        HapticsManager.shared.vibrateForSelection()
         let album = albums[indexPath.row]
 
         let playlistVC = AlbumViewController(album: album)

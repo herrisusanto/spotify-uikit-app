@@ -8,140 +8,75 @@
 import UIKit
 
 class WelcomeViewController: UIViewController {
-    
-    private let signUpButton: SButton = {
-        let signUpButton = SButton(color: Colors.primaryGreen!, title: "Sign up free", image: nil)
-        signUpButton.configuration?.baseForegroundColor = Colors.primaryBlack
-        
-        
-        return signUpButton
+
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.image = UIImage(named: "spotify_background")
+
+        return imageView
     }()
-    
-    @objc func didTapSignUp() {
-        let signUpViewController = SignUpViewController()
-        signUpViewController.navigationItem.largeTitleDisplayMode = .never 
-        navigationItem.backButtonTitle = nil
-        navigationController?.pushViewController(signUpViewController, animated: true)
-        
-    }
-    
+
+    private let overlayView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0.7
+
+        return view
+    }()
+
     
     private let spotifyButton: SButton = {
-        let spotifyButton = SButton(color: Colors.primaryGreen!, title: "Continue with Spotify", image: nil)
-        spotifyButton.configuration?.baseForegroundColor = Colors.primaryBlack
-        
+        let spotifyButton = SButton(color: .white, title: "Continue with Spotify", image: nil)
+        spotifyButton.tintColor = .black
+
+
         return spotifyButton
     }()
-    
-    
-    private let googleButton: SButton = {
-       let googleButton = SButton()
-        googleButton.set(color: Colors.primaryWhite!, title: "Continue with Google", image: Images.googleLogo)
-        googleButton.configuration?.baseForegroundColor = Colors.primaryBlack
-        
-        
-        return googleButton
-    }()
-    
-    private let facebookButton: SButton = {
-        let facebookButton = SButton(color: Colors.primaryWhite!, title: "Continue with Facebook", image: Images.facebookLogo)
-        facebookButton.configuration?.baseForegroundColor = Colors.primaryBlack
-        return facebookButton
-    }()
-    
-    private let signInButton: UIButton = {
-        let button = UIButton(configuration: UIButton.Configuration.plain())
-        button.setTitle("Log in", for: .normal)
-        button.tintColor = .white
-        button.isHighlighted = true
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    @objc func didTapSignIn() {
-        let signInViewController = SignInViewController()
-        signInViewController.navigationItem.largeTitleDisplayMode = .never 
-        navigationItem.backButtonTitle = nil
-        navigationController?.pushViewController(signInViewController, animated: true)
-    }
-     
+
     
     private let spotifyLogo: UIImageView = {
-        let imageLogo = Images.spotifyIconWhite
+        let imageLogo = Images.spotifyIconGreen
         imageLogo.contentMode = .scaleAspectFit
         imageLogo.translatesAutoresizingMaskIntoConstraints = false
         
         return imageLogo
     }()
-    
-    
-    
-    
+
+    private let label: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 32, weight: .semibold)
+        label.text = "Listen to Millions\nof Songs on\nthe go."
+        return label
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = view.bounds
-        gradientLayer.colors = [
-            UIColor.gray.cgColor,
-            Colors.primaryBlack?.cgColor as Any,
-            Colors.primaryBlack?.cgColor as Any,
-            Colors.primaryBlack?.cgColor as Any,
-            Colors.primaryBlack?.cgColor as Any
-        ]
-    
-        view.layer.insertSublayer(gradientLayer, at: 0)
-        
+
+        title = "Spotify"
+        view.backgroundColor = .blue
+        view.addSubview(imageView)
+        view.addSubview(overlayView)
         view.addSubview(spotifyLogo)
-        view.addSubview(signUpButton)
-        view.addSubview(facebookButton)
-        view.addSubview(googleButton)
         view.addSubview(spotifyButton)
-        view.addSubview(signInButton)
-        
+        view.addSubview(label)
+
         spotifyButton.addTarget(self, action: #selector(didTapSpotify), for: .touchUpInside)
-        signUpButton.addTarget(self, action: #selector(didTapSignUp), for: .touchUpInside)
-        signInButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
-        
-        NSLayoutConstraint.activate([
-            spotifyLogo.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
-            spotifyLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            spotifyLogo.heightAnchor.constraint(equalToConstant: 100),
-            spotifyLogo.widthAnchor.constraint(equalToConstant: 100),
-            
-            signUpButton.bottomAnchor.constraint(equalTo: facebookButton.topAnchor, constant: -20),
-            signUpButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            signUpButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            signUpButton.heightAnchor.constraint(equalToConstant: 60),
-            
-            facebookButton.bottomAnchor.constraint(equalTo: googleButton.topAnchor, constant: -20),
-            facebookButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            facebookButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            facebookButton.heightAnchor.constraint(equalToConstant: 60),
-            
-            googleButton.bottomAnchor.constraint(equalTo: spotifyButton.topAnchor, constant: -20),
-            googleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            googleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            googleButton.heightAnchor.constraint(equalToConstant: 60),
-            
-            spotifyButton.bottomAnchor.constraint(equalTo: signInButton.topAnchor, constant: -5),
-            spotifyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            spotifyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            spotifyButton.heightAnchor.constraint(equalToConstant: 60),
-            
-            signInButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            signInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            signInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            signInButton.heightAnchor.constraint(equalToConstant: 60),
-            
-            
-            
-        ])
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        imageView.frame = view.bounds
+        overlayView.frame = view.bounds
+
+        spotifyButton.frame = CGRect(x: 20, y: view.height-50-view.safeAreaInsets.bottom, width: view.width-40, height: 50)
+
+        spotifyLogo.frame = CGRect(x: (view.width-120)/2, y: (view.height-350)/2, width: 120, height: 120)
+
+        label.frame = CGRect(x: 30, y: spotifyLogo.bottom+30, width: view.width-60, height: 150)
     }
     
     @objc func didTapSpotify() {

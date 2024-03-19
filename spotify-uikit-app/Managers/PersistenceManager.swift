@@ -16,7 +16,7 @@ enum Keys: String {
 enum PersistenceManager {
     static private let defaults = UserDefaults.standard
     
-    static func save(_ value: Any, forKey key: Keys){
+    static func save(_ value: Any?, forKey key: Keys){
         defaults.setValue(value, forKey: key.rawValue)
     }
 }
