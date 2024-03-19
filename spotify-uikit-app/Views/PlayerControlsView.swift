@@ -103,12 +103,10 @@ final class PlayerControlsView: UIView {
     }
 
     @objc private func didTapBack() {
-        print("Did tap next")
         delegate?.playerControlsViewDidTapBackwardButton(self)
     }
 
     @objc private func didTapNext() {
-        print("Did tap next")
         delegate?.playerControlsViewDidTapForwardButton(self)
     }
 

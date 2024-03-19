@@ -66,7 +66,6 @@ final class AuthManager {
         let basicToken = Constants.clientID+":"+Constants.clientSecret
         let data = basicToken.data(using: .utf8)
         guard let base64String = data?.base64EncodedString() else {
-            print("Failed to get base 64 string.")
             completion(false)
             return
         }
@@ -86,11 +85,9 @@ final class AuthManager {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
                 let result = try decoder.decode(AuthResponse.self, from: data)
-                print("Successfully refreshed!")
                 self.cacheToken(result: result)
                 completion(true)
-            } catch {
-                print("Error is here: \(error.localizedDescription)")
+            } catch { 
                 completion(false)
             }
         }
