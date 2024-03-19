@@ -30,9 +30,47 @@ final class NetworkManager {
                     let result = try decoder.decode(AlbumDetailsResponse.self, from: data)
                     completion(.success(result))
                 } catch {
-                    print(error.localizedDescription)
                     completion(.failure(error))
                 }
+            }
+            task.resume()
+        }
+    }
+
+    public func getCurrentUserAlbums(completion: @escaping(Result<[Album], Error>) -> Void) {
+        let url = URL(string: Constants.baseApiUrl + "/me/albums")
+        createRequest(with: url, type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let result = try decoder.decode(LibraryAlbumsResponse.self, from: data)
+                    let albums = result.items.compactMap({ $0.album })
+                    completion(.success(albums))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+
+    public func saveAlbum(album: Album, completion: @escaping(Bool) -> Void ) {
+        let url = URL(string: Constants.baseApiUrl + "/me/albums?ids=\(album.id)")
+        createRequest(with: url, type: .PUT) { baseRequest in
+            var request = baseRequest
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let code = (response as? HTTPURLResponse)?.statusCode, error == nil else {
+                    completion(false)
+                    return
+                }
+                completion(code == 200)
             }
             task.resume()
         }
@@ -73,7 +111,6 @@ final class NetworkManager {
                     let result = try decoder.decode(LibraryPlaylistsResponse.self, from: data)
                     completion(.success(result.items))
                 } catch {
-                    print("Error get current user playlists.\(error.localizedDescription)")
                     completion(.failure(error))
                 }
             }
@@ -95,21 +132,21 @@ final class NetworkManager {
                             ]
                             request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
 
-                           let task =  URLSession.shared.dataTask(with: request) { data, _, error in
-                               guard let data = data, error == nil else {
-                                   completion(false)
-                                   return
-                               }
-                               do {
-                                   let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                                   if let response = result as? [String: Any], response["id"] as? String != nil {
-                                       completion(true)
-                                   } else {
-                                       completion(false)
-                                   }
-                               } catch {
-                                   completion(false)
-                               }
+                            let task =  URLSession.shared.dataTask(with: request) { data, _, error in
+                                guard let data = data, error == nil else {
+                                    completion(false)
+                                    return
+                                }
+                                do {
+                                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                                    if let response = result as? [String: Any], response["id"] as? String != nil {
+                                        completion(true)
+                                    } else {
+                                        completion(false)
+                                    }
+                                } catch {
+                                    completion(false)
+                                }
                             }
                             task.resume()
                         }
@@ -145,7 +182,6 @@ final class NetworkManager {
                         completion(false)
                     }
                 } catch {
-                    print(error.localizedDescription)
                     completion(false)
                 }
             }
@@ -180,7 +216,6 @@ final class NetworkManager {
                         completion(false)
                     }
                 } catch {
-                    print(error.localizedDescription)
                     completion(false)
                 }
             }
@@ -202,7 +237,6 @@ final class NetworkManager {
                     let profile = try decoder.decode(UserProfile.self, from: data)
                     completion(.success(profile))
                 } catch {
-                    print(error.localizedDescription)
                     completion(.failure(error))
                 }
 
@@ -269,7 +303,7 @@ final class NetworkManager {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let result = try decoder.decode(SearchResultResponse.self, from: data)
-                    
+
                     var searchResults: [SearchResult] = []
                     searchResults.append(contentsOf: result.tracks.items.compactMap({.track(model: $0)}))
                     searchResults.append(contentsOf: result.albums.items.compactMap({.album(model: $0)}))
@@ -289,6 +323,7 @@ final class NetworkManager {
         case GET
         case POST
         case DELETE
+        case PUT
     }
 
 
@@ -350,7 +385,7 @@ final class NetworkManager {
 
     public func getRecommendations(genres: Set<String>,completion: @escaping ((Result<RecommendationsResponse, Error>)) -> Void) {
         let seeds = genres.joined(separator: ",")
-        createRequest(with: URL(string: Constants.baseApiUrl + "/recommendations?limit=50&seed_genres=\(seeds)"), type: .GET) { request in  
+        createRequest(with: URL(string: Constants.baseApiUrl + "/recommendations?limit=50&seed_genres=\(seeds)"), type: .GET) { request in
             let task = URLSession.shared.dataTask(with: request) { data, _ , error in
                 guard let data = data, error == nil else {
                     completion(.failure(APIError.failedToGetData))
@@ -379,7 +414,7 @@ final class NetworkManager {
                 do {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
-                   
+
                     let result = try decoder.decode(RecommendedGenresResponse.self, from: data)
                     completion(.success(result))
                 } catch {

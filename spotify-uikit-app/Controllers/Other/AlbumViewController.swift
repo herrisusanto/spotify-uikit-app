@@ -40,7 +40,7 @@ class AlbumViewController: UIViewController {
         self.album = album
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -60,6 +60,26 @@ class AlbumViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
 
+        fetchData()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapActions))
+    }
+
+    @objc func didTapActions() {
+        let actionsSheet = UIAlertController(title: album.name, message: "Actions", preferredStyle: .actionSheet)
+        actionsSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        actionsSheet.addAction(UIAlertAction(title: "Save Album", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            NetworkManager.shared.saveAlbum(album: self.album) { success in
+                if success {
+                    NotificationCenter.default.post(name: .albumSavedNotification, object: nil)
+                }
+            }
+        }))
+
+        present(actionsSheet, animated: true)
+    }
+
+    func fetchData() {
         NetworkManager.shared.getAlbumDetails(for: album) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -77,6 +97,8 @@ class AlbumViewController: UIViewController {
             }
         }
     }
+
+
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
