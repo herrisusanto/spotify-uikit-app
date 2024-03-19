@@ -27,7 +27,7 @@ class WelcomeViewController: UIViewController {
 
     
     private let spotifyButton: SButton = {
-        let spotifyButton = SButton(color: .white, title: "Continue with Spotify", image: nil)
+        let spotifyButton = SButton(color: .white, title: "Connect to Spotify", image: nil)
         spotifyButton.tintColor = .black
 
 
