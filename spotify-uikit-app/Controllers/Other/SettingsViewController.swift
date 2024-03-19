@@ -91,7 +91,4 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         return model.title
     }
 }
-
-//#Preview("Settings View Controller"){
-//    SettingsViewController()
-//}
+ 

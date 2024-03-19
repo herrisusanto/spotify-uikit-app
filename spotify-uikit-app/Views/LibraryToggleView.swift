@@ -73,17 +73,11 @@ class LibraryToggleView: UIView {
 
     @objc private func didTapPlaylists() {
         state = .playlist
-        UIView.animate(withDuration: 0.2) {
-            self.layoutIndicator()
-        }
         delegate?.libraryToggleViewDidTapPlaylists(self)
     }
 
     @objc private func didTapAlbums() {
         state = .album
-        UIView.animate(withDuration: 0.2) {
-            self.layoutIndicator()
-        }
         delegate?.libraryToggleViewDidTapAlbums(self)
     }
 
