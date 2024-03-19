@@ -153,7 +153,40 @@ final class NetworkManager {
         }
     }
 
-    public func removeTrackFromPlaylist(track: AudioTrack,playlist: Playlist ,completion: @escaping(Bool) -> Void){}
+    public func removeTrackFromPlaylist(track: AudioTrack,playlist: Playlist ,completion: @escaping(Bool) -> Void){
+        let url = URL(string: Constants.baseApiUrl + "/playlists/\(playlist.id)/tracks")
+        createRequest(with: url, type: .DELETE) { baseRequest in
+            var request = baseRequest
+            let json: [String: Any] = [
+                "tracks": [
+                    [
+                        "uri" : "spotify:track:\(track.id)"
+                    ]
+                ]
+            ]
+            request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(false)
+                    return
+                }
+                do {
+                    let result = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                    if let response = result as? [String: Any], response["snapshot_id"] as? String != nil {
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    completion(false)
+                }
+            }
+            task.resume()
+        }
+    }
 
     // MARK:  - Profile
     public func getCurrentProfile(completion: @escaping(Result<UserProfile, Error>) ->Void) {
@@ -255,6 +288,7 @@ final class NetworkManager {
     enum HTTPMethod: String {
         case GET
         case POST
+        case DELETE
     }
 
 
