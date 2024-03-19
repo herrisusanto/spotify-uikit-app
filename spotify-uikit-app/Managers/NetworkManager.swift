@@ -60,10 +60,10 @@ final class NetworkManager {
     }
 
     public func getCurrentUserPlaylists(completion: @escaping(Result<[Playlist], Error>) -> Void){
-        let url = URL(string: Constants.baseApiUrl + "/me/playlists?limit=50")
+        let url = URL(string: Constants.baseApiUrl + "/me/playlists")
         createRequest(with: url, type: .GET) { request in
-            let task = URLSession.shared.dataTask(with: request) { data, _, error in
-                guard let data = data, error == nil else {
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil, let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                     completion(.failure(APIError.failedToGetData))
                     return
                 }
@@ -73,6 +73,7 @@ final class NetworkManager {
                     let result = try decoder.decode(LibraryPlaylistsResponse.self, from: data)
                     completion(.success(result.items))
                 } catch {
+                    print("Error get current user playlists.\(error.localizedDescription)")
                     completion(.failure(error))
                 }
             }
@@ -80,7 +81,44 @@ final class NetworkManager {
         }
     }
 
-    public func createPlaylist(with name: String, completion: @escaping(Bool) -> Void){}
+    public func createPlaylist(with name: String, completion: @escaping(Bool) -> Void){
+        getCurrentProfile { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                    case .success(let profile):
+                        let urlString = Constants.baseApiUrl + "/users/\(profile.id)/playlists"
+                        self.createRequest(with: URL(string: urlString), type: .POST) { baseRequest in
+                            var request = baseRequest
+                            let json = [
+                                "name": name
+                            ]
+                            request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
+
+                           let task =  URLSession.shared.dataTask(with: request) { data, _, error in
+                               guard let data = data, error == nil else {
+                                   completion(false)
+                                   return
+                               }
+                               do {
+                                   let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                                   if let response = result as? [String: Any], response["id"] as? String != nil {
+                                       completion(true)
+                                   } else {
+                                       completion(false)
+                                   }
+                               } catch {
+                                   completion(false)
+                               }
+                            }
+                            task.resume()
+                        }
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                }
+            }
+        }
+    }
 
     public func addTrackToPlaylist(track: AudioTrack,playlist: Playlist ,completion: @escaping(Bool) -> Void){}
 
@@ -88,21 +126,20 @@ final class NetworkManager {
 
     // MARK:  - Profile
     public func getCurrentProfile(completion: @escaping(Result<UserProfile, Error>) ->Void) {
-        createRequest(with: URL(string: "\(Constants.baseApiUrl)/me"), type: .GET) { baseRequest in
-            let task = URLSession.shared.dataTask(with: baseRequest) { data, _, error in
+        createRequest(with: URL(string: "\(Constants.baseApiUrl)/me"), type: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data, error == nil else {
                     completion(.failure(APIError.failedToGetData))
                     return
                 }
                 do {
                     let decoder = JSONDecoder()
-                    //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    //                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    //                    print("Data: \(result)")
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let profile = try decoder.decode(UserProfile.self, from: data)
                     completion(.success(profile))
                 } catch {
-                    //                    completion(.failure(error))
+                    print(error.localizedDescription)
+                    completion(.failure(error))
                 }
 
             }

@@ -25,35 +25,37 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
-        
+
         fetchProfile()
         
     }
-    
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
+    }
+
     private func fetchProfile() {
-        DispatchQueue.main.async {
             NetworkManager.shared.getCurrentProfile { [weak self] result in
-                guard let self = self else { return }
-                
-                switch result {
-                case .success(let model):
-                    self.updateUI(with: model)
-                    break
-                case .failure(let failure):
-                    print(failure.localizedDescription)
-//                    self.failedToGetProfile()
-                    break
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let model):
+                        self.updateUI(with: model)
+                    case .failure(let failure):
+                        print(failure.localizedDescription)
+                        self.failedToGetProfile()
+                    }
                 }
+
             }
-        }
     }
     
     private func updateUI(with model: UserProfile) {
-        tableView.isEditing = false
-//        models.append("Full Name: \(model.displayName)")
-        models.append("Email Address: \(model.email)")
-//        models.append("User ID: \(model.id)")
-//        models.append("Plan: \(model.product)")
+        tableView.isHidden = false
+        models.append("Full Name: \(model.displayName)")
+        models.append("User ID: \(model.id)")
+        models.append("Plan: \(model.product)")
         
         tableView.reloadData()
     }
